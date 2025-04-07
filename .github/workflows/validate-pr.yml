@@ -20,4 +20,6 @@ jobs:
     uses: clouddrove-sandbox/terraform-shared-workflows/.github/workflows/validate-pr-title.yml@master
     secrets:
       repo-token : ${{ secrets.TEST_SECRETES }}
-
+permissions:
+      contents: read
+      pull-requests: write
