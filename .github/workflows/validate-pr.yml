@@ -26,10 +26,35 @@
 
 
 
+# name: 'Validate PR title'
+
+# on:
+#   workflow_dispatch:
+#   pull_request_target:
+#     types:
+#       - opened
+#       - edited
+#       - synchronize
+
+# jobs:
+#   validate-pr-title:
+#     uses: clouddrove-sandbox/terraform-shared-workflows/.github/workflows/validate-pr-title.yml@master
+#     secrets:
+#       repo-token: ${{ secrets.TESTING_PURPOSE }}
+#     permissions:
+#       contents: read
+#       pull-requests: write
+
+
+
+
+
+
+
+
 name: 'Validate PR title'
 
 on:
-  workflow_dispatch:
   pull_request_target:
     types:
       - opened
@@ -37,10 +62,24 @@ on:
       - synchronize
 
 jobs:
-  validate-pr-title:
-    uses: clouddrove-sandbox/terraform-shared-workflows/.github/workflows/validate-pr-title.yml@master
-    secrets:
-      repo-token: ${{ secrets.TESTING_PURPOSE }}
-    permissions:
-      contents: read
-      pull-requests: write
+  main:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5.5.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.Testing-purpose }}
+        with:
+          types: |
+            fix
+            feat
+            docs
+            ci
+            chore
+          requireScope: false
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            starts with an uppercase character.
+          wip: true
+          validateSingleCommit: false
