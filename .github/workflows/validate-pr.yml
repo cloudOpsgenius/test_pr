@@ -1,3 +1,14 @@
+
+# on:
+#   workflow_dispatch:
+#   push:
+
+# jobs:
+#   validate-title:
+#     uses: 
+#     secrets:
+#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 name: 'Validate PR title'
 
 on:
